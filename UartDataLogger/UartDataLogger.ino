@@ -5,6 +5,8 @@
 // Error messages stored in flash.
 #define error(msg) sd.errorHalt(F(msg))
 
+// SDチップ選択ピン
+const uint8_t chipSelect = SS;
 // File system object.
 SdFat sd;
 // Log file.
@@ -19,14 +21,14 @@ void setup() {
   while (!Serial) {} // wait for Leonardo
   delay(100);
 
-  // Initialize the SD card at SPI_HALF_SPEED to avoid bus errors with
-  // breadboards.  use SPI_FULL_SPEED for better performance.
+  //SPI通信するための初期化
+  //SPI_HALF_SPEED
+  //SPI_FULL_SPEEDを使うとパフォーマンスが向上する
   // if (!sd.begin(chipSelect, SPI_HALF_SPEED)) {
   if (!sd.begin(chipSelect, SPI_FULL_SPEED)) {
     sd.initErrorHalt();
   }
 
-  // Find an unused file name.
   //ファイルの作成
   if (BASE_NAME_SIZE > 6) {
     error("FILE_BASE_NAME too long");
@@ -63,9 +65,8 @@ void loop() {
 void serialEvent(){
   String str = "";
   if (Serial.available() > 0){
-    str = Serial.readStringUntil(';'); //wait終了文字列を入れる デフォルトで1secのTimeoutを持っている
+    str = Serial.readStringUntil('\r\n'); //文字列の末尾文字を取得 これを入れないとtimeout(デフォルトで1sec)まで待つことになる.println()で持ってくるため\r\n(CR LF)を末尾にしている
   }
   Serial.println(str);
-  // file.print(str);
   file.println(str);
 }
