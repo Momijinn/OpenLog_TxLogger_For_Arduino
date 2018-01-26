@@ -20,7 +20,7 @@ Arduino言語でコーディングしている
 マイコンに接続する場合はSerial.println()等の改行付きシリアル出力で一気に持ってくること(改行付きにしない(Serial.print()等)とタイムアウト(1sec待ち)が発生してしまう)
 
 ## Install
-OpenLogUSBシリアル変換キットでパソコンと接続し、TxRxDataLogger.inoを書き込む
+OpenLogUSBシリアル変換キットでパソコンと接続し、UartDataLogger.inoを書き込む
 
 書き込む時にボードは"Arduino/Genuino Uno"にする
 
